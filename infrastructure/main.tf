@@ -112,7 +112,7 @@ resource "aws_instance" "instance2" {
 
 
 resource "aws_vpc_dhcp_options" "main" {
-  domain_name         = "cit.local"
+  domain_name         = "lab13.internal"
   domain_name_servers = ["AmazonProvidedDNS"]
 }
 
@@ -122,7 +122,7 @@ resource "aws_vpc_dhcp_options_association" "main" {
 }
 
 resource "aws_route53_zone" "main" {
-  name = "cit.local"
+  name = "lab13.internal"
   vpc {
     vpc_id = aws_vpc.main.id
   }
@@ -130,7 +130,7 @@ resource "aws_route53_zone" "main" {
 
 resource "aws_route53_record" "instance1" {
   zone_id = aws_route53_zone.main.zone_id
-  name    = "${aws_instance.instance1.tags.Name}.cit.local"
+  name    = "${aws_instance.instance1.tags.Name}.lab13.internal"
   type    = "A"
   ttl     = "300"
   records = [aws_instance.instance1.private_ip]
@@ -138,7 +138,7 @@ resource "aws_route53_record" "instance1" {
 
 resource "aws_route53_record" "instance2" {
   zone_id = aws_route53_zone.main.zone_id
-  name    = "${aws_instance.instance2.tags.Name}.cit.local"
+  name    = "${aws_instance.instance2.tags.Name}.lab13.internal"
   type    = "A"
   ttl     = "300"
   records = [aws_instance.instance2.private_ip]
