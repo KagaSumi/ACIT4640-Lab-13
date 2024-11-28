@@ -1,0 +1,11 @@
+:80 {
+  handle_path /chat/* {
+    reverse_proxy {{hostvars['lab13_backend_b1'].private_ip_address}}
+  }
+
+  handle {
+    root * /var/www/html
+    file_server {
+      index index.html
+    }
+}
