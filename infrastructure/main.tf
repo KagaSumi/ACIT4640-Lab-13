@@ -8,12 +8,12 @@ module "network" {
     subnets = [
         {
             name = "public"
-            cidr_block = "10.0.1.0/16"
+            cidr_block = "10.0.1.0/24"
             availability_zone = "us-west-2a"
         },
         {
             name = "private"
-            cidr_block = "10.0.2.0/16"
+            cidr_block = "10.0.2.0/24"
             availability_zone = "us-west-2b"
         }
     ]
