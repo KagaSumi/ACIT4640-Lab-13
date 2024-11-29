@@ -68,7 +68,7 @@ module "ec2" {
 
 module "dns" {
     source = "./modules/terraform_dns_dhcp/"
-    aws_vpc = module.network.vpc_id
+    aws_vpc_id = module.network.vpc_id
     domain_name = "lab13.internal"
     instances = module.ec2.instances
 }

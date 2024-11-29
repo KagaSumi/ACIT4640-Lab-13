@@ -1,4 +1,4 @@
-variable "aws_vpc" {
+variable "aws_vpc_id" {
   description = "AWS VPC information"
 }
 
