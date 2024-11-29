@@ -34,3 +34,6 @@ override.tf.json
 .terraformrc
 terraform.rc
 .terraform.lock.hcl
+infrastructure/acit_4640_lab_13.pub
+infrastructure/connect_vars.sh
+infrastructure/acit_4640_lab_13.pem
