@@ -51,14 +51,14 @@ module "ec2" {
     w01 = {
       ami_id         = "ami-03839f1dba75bb628"
       instance_type  = "t2.micro"
-      security_groups = module.network.public_sg.id
+      security_groups = module.network.public_sg_id
       ssh_key_name   = module.ssh_key.ssh_key_name
       subnet_id = module.network.subnets.public.id
     }
     b01 = {
       ami_id         = "ami-03839f1dba75bb628"
       instance_type           = "t2.micro"
-      security_groups = module.network.private_sg.id
+      security_groups = module.network.private_sg_id
       ssh_key_name   = module.ssh_key.ssh_key_name
       subnet_id = module.network.subnets.private.id
     }

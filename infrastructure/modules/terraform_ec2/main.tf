@@ -5,7 +5,7 @@ resource "aws_instance" "ec2_instance" {
     ami = each.value.ami_id
     instance_type = each.value.instance_type
     key_name = each.value.ssh_key_name
-    security_groups = [each.value.security_group]
+    security_groups = [each.value.security_groups]
     subnet_id = each.value.subnet_id
     tags = {
         Name = each.key
