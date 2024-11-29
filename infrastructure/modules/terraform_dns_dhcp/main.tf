@@ -16,11 +16,11 @@ resource "aws_route53_zone" "main" {
 }
 
 resource "aws_route53_record" "this" {
-  count = length(var.instances)
+  for_each = var.instances
 
   zone_id = aws_route53_zone.main.zone_id
-  name    = "${var.instances[count.index].tags.Name}.${aws_vpc_dhcp_options.main.domain_name}"
+  name    = "${each.value.tags.Name}.${aws_vpc_dhcp_options.main.domain_name}"
   type    = "A"
   ttl     = var.ttl
-  records = [var.instances[count.index].private_ip]
+  records = [each.value.private_ip]
 }
