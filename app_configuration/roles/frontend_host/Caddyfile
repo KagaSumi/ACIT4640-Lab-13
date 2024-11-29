@@ -1,6 +1,6 @@
 :80 {
   handle_path /chat/* {
-    reverse_proxy {{hostvars['lab13_backend_b1'].private_ip_address}}
+    reverse_proxy b01.lab13.internal
   }
 
   handle {
