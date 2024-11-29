@@ -110,6 +110,27 @@ resource "aws_instance" "instance2" {
 
 }
 
+module "ec2" {
+  source = "./modules/terraform_ec2_multiple"
+  
+  instance_configs = {
+    i1 = {
+      ami         = "ami-03839f1dba75bb628"
+      instance_type  = "t2.micro"
+      subnet_id      = aws_subnet.subnet1.id
+      security_groups = module.network.public.id
+      ssh_key_name   = module.ssh_key.ssh_key_name
+    }
+    i2 = {
+      ami         = "ami-03839f1dba75bb628"
+      instance_type           = "t2.micro"
+      subnet_id         = aws_subnet.subnet2.id
+      security_groups = module.network.private.id
+      ssh_key_name   = module.ssh_key.ssh_key_name
+    }
+  }
+}
+
 
 resource "aws_vpc_dhcp_options" "main" {
   domain_name         = "lab13.internal"
