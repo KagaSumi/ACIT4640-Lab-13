@@ -45,22 +45,22 @@ module "network" {
 }
 
 module "ec2" {
-  source = "./modules/terraform_ec2_multiple"
+  source = "./modules/terraform_ec2"
   
   instance_configs = {
     w01 = {
-      ami         = "ami-03839f1dba75bb628"
+      ami_id         = "ami-03839f1dba75bb628"
       instance_type  = "t2.micro"
-      subnet_id      = aws_subnet.subnet1.id
       security_groups = module.network.public_sg.id
       ssh_key_name   = module.ssh_key.ssh_key_name
+      subnet_id = module.network.subnets.public.id
     }
     b01 = {
-      ami         = "ami-03839f1dba75bb628"
+      ami_id         = "ami-03839f1dba75bb628"
       instance_type           = "t2.micro"
-      subnet_id         = aws_subnet.subnet2.id
       security_groups = module.network.private_sg.id
       ssh_key_name   = module.ssh_key.ssh_key_name
+      subnet_id = module.network.subnets.private.id
     }
   }
 }
@@ -81,7 +81,7 @@ module "ssh_key" {
 
 module "connect_script" {
   source           = "git::https://gitlab.com/acit_4640_library/tf_modules/aws_ec2_connection_script.git"
-  ec2_instances    = { "i1" = aws_instance.instance1, "i2" = aws_instance.instance2 }
+  ec2_instances    = { "w01" = module.ec2.instances.w01, "b01" = module.ec2.instances.b01 }
   output_file_path = "${path.root}/connect_vars.sh"
   ssh_key_file     = module.ssh_key.priv_key_file
   ssh_user_name    = "ubuntu"

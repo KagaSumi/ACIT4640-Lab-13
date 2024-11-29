@@ -1,4 +1,3 @@
-
 variable "instance_configs" {
     type = map(object({
         ami_id = string

@@ -2,8 +2,8 @@ output "vpc_id" {
     value = aws_vpc.main.id
 }
 
-output "subnet" {
-    value = aws_subnet.subnets
+output "subnets" {
+    value = {for subnet in aws_subnet.subnets: subnet.tags.Name => subnet}
 }
 
 output "public_sg" {

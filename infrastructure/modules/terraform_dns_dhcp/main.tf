@@ -11,7 +11,7 @@ resource "aws_vpc_dhcp_options_association" "main" {
 resource "aws_route53_zone" "main" {
   name = aws_vpc_dhcp_options.main.domain_name
   vpc {
-    vpc_id = var.aws_vpc.id
+    vpc_id = var.aws_vpc_id
   }
 }
 
