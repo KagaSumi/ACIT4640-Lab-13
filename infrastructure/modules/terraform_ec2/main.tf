@@ -10,7 +10,7 @@ resource "aws_instance" "ec2_instance" {
     tags = {
         Name = each.key
         Server_Role = each.value.role
-        Project = "Lab13"
+        Project = "lab13"
     }
 
     user_data = <<-EOF

@@ -23,13 +23,13 @@ module "network" {
             ip_protocol = "tcp"
             from_port = 22
             to_port = 22
-            cidr_ipv4 = "0.0.0.0/24"
+            cidr_ipv4 = "0.0.0.0/0"
         },
         {
             ip_protocol = "tcp"
             from_port = 80
             to_port = 80
-            cidr_ipv4 = "0.0.0.0/24"
+            cidr_ipv4 = "0.0.0.0/0"
         }
     ]
     private_security_group_ingress = [
@@ -37,7 +37,7 @@ module "network" {
             ip_protocol = "tcp"
             from_port = 22
             to_port = 22
-            cidr_ipv4 = "0.0.0.0/24"
+            cidr_ipv4 = "0.0.0.0/0"
         },
     ]
  
@@ -49,7 +49,7 @@ module "ec2" {
   
   instance_configs = {
     w01 = {
-      ami_id         = "ami-03839f1dba75bb628"
+      ami_id         = "ami-0058f736afded77b3"
       instance_type  = "t2.micro"
       security_groups = module.network.public_sg_id
       ssh_key_name   = module.ssh_key.ssh_key_name
@@ -57,7 +57,7 @@ module "ec2" {
       role = "Frontend"
     }
     b01 = {
-      ami_id         = "ami-03839f1dba75bb628"
+      ami_id         = "ami-0058f736afded77b3"
       instance_type           = "t2.micro"
       security_groups = module.network.private_sg_id
       ssh_key_name   = module.ssh_key.ssh_key_name

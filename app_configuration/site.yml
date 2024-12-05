@@ -36,4 +36,13 @@
     - frontend
 
 # Call the backend_host role for the lab13_backend_b1 host 
-
+- name: setup backend
+  hosts: role_Backend:&project_lab13
+  tasks:
+    - name: run backend_host role
+      ansible.builtin.include_role:
+        name: backend_host
+      vars:
+        project_group: project_Lab13
+  tags:
+    - backend
