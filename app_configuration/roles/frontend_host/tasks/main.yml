@@ -1,0 +1,82 @@
+---
+- name: Install caddy requirements
+  ansible.builtin.package:
+    name: "{{ item }}"
+    state: latest
+    update_cache: true
+  loop:
+    - debian-keyring
+    - debian-archive-keyring
+    - apt-transport-https
+    - curl
+  become: true
+
+- name: Get caddy keyring and repo info
+  ansible.builtin.get_url:
+    url: "{{ item.url }}"
+    dest: "{{ item.dest }}"
+    mode: u=rwx,g=rwx,o=rwx
+  loop:
+    - url: https://dl.cloudsmith.io/public/caddy/stable/gpg.key
+      dest: /tmp/caddy_gpg.key
+    - url: https://dl.cloudsmith.io/public/caddy/stable/debian.deb.txt
+      dest: /tmp/caddy_debian.deb.txt
+  become: true
+
+- name: Install caddy keyring and repo listing
+  ansible.builtin.shell: |
+    cat /tmp/caddy_gpg.key | gpg --dearmor -o /usr/share/keyrings/caddy-stable-archive-keyring.gpg
+    cat /tmp/caddy_debian.deb.txt | tee /etc/apt/sources.list.d/caddy-stable.list
+  args:
+    creates: /usr/share/keyrings/caddy-stable-archive-keyring.gpg
+  become: true
+
+- name: Install caddy package
+  ansible.builtin.package:
+    name: "{{ item }}"
+    state: latest
+    update_cache: true
+  loop:
+    - caddy
+  become: true
+  notify: restart caddy
+
+- name: Create directory
+  become: true
+  ansible.builtin.file:
+    path: /var/www/html
+    state: directory
+    mode: u=rwx,g=rx,o=rx
+    owner: caddy
+    group: caddy
+
+- name: Copy files to directory
+  become: true
+  ansible.builtin.copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    mode: "{{ item.mode }}"
+    owner: caddy
+    group: caddy
+  loop:
+    - src: client.js
+      dest: /var/www/html/client.js
+      mode: u=rw,g=rw,o=r
+    - src: index.html
+      dest: /var/www/html/index.html
+      mode: u=rw,g=rw,o=r
+    - src: Caddyfile
+      dest: /etc/caddy/Caddyfile
+      mode: u=rw,g=r,o=r
+  notify: restart caddy
+
+- name: Template config
+  become: true
+  ansible.builtin.template:
+    src: config.js.j2
+    dest: /var/www/html/config.js
+    mode: u=rw,g=r,o=r
+    owner: caddy
+    group: caddy
+  notify: restart caddy
+...

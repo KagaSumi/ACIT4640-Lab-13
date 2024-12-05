@@ -25,7 +25,7 @@
 
 # Create role frontend_host
 - name: setup frontend
-  hosts: role_web:&project_lab13
+  hosts: role_Frontend:&project_lab13
   tasks:
     - name: run frontend_host role
       ansible.builtin.include_role:

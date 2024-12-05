@@ -1,0 +1,8 @@
+---
+- name: restart caddy
+  ansible.builtin.service:
+    name: caddy
+    state: restarted
+    enabled: true
+  become: true
+...
