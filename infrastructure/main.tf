@@ -54,6 +54,7 @@ module "ec2" {
       security_groups = module.network.public_sg_id
       ssh_key_name   = module.ssh_key.ssh_key_name
       subnet_id = module.network.subnets.public.id
+      role = "Frontend"
     }
     b01 = {
       ami_id         = "ami-03839f1dba75bb628"
@@ -61,6 +62,7 @@ module "ec2" {
       security_groups = module.network.private_sg_id
       ssh_key_name   = module.ssh_key.ssh_key_name
       subnet_id = module.network.subnets.private.id
+      role = "Backend"
     }
   }
 }

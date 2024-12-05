@@ -5,6 +5,7 @@ variable "instance_configs" {
         subnet_id = string
         security_groups = string
         ssh_key_name = string
+        role = string
     }))
     description ="Json-like object of ec2 instances"
 }

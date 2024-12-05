@@ -9,6 +9,8 @@ resource "aws_instance" "ec2_instance" {
     subnet_id = each.value.subnet_id
     tags = {
         Name = each.key
+        Server_Role = each.value.role
+        Project = "Lab13"
     }
 
     user_data = <<-EOF

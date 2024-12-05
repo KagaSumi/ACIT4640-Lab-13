@@ -7,5 +7,6 @@
     root * /var/www/html
     file_server {
       index index.html
+        }
     }
 }
